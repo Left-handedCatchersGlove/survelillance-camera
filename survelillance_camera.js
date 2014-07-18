@@ -3,8 +3,8 @@ var io = require('socket.io').listen(3000);
 
 // Arduino
 var five = require("johnny-five"),
-     keypress = require("keypress"),
-     board;
+    keypress = require("keypress"),
+    board;
 
 // Generate keypress process
 keypress(process.stdin);
@@ -12,6 +12,8 @@ keypress(process.stdin);
 board = new five.Board();
 // Angle
 var angle = 90;
+
+var servo;
 
 // Main func
 board.on("ready", function() {
@@ -28,9 +30,9 @@ board.on("ready", function() {
     pin: 8
   });
   outLed.strobe(500);
-  
+
   // Camera servo
-  var servo = new five.Servo({
+  servo = new five.Servo({
     pin: "10",
     type: "continuous"
   }).stop();
@@ -49,14 +51,14 @@ board.on("ready", function() {
       process.exit();
     }
     else if (key.name === "up") {
-      console.log("Right");
+      console.log("Left");
       //servo.cw();
       angle += 20;
       if( angle > 180 ) angle = 180;
       servo.to(angle);
     }
     else if (key.name === "down") {
-      console.log("Left");
+      console.log("Right");
       //servo.ccw();
       angle -= 20;
       if( angle < 0 ) angle = 0;
@@ -75,4 +77,20 @@ io.sockets.on('connection', function (socket) {
   socket.on('video', function (data) {
     socket.broadcast.emit('video', data);
   });
+
+	// Trun right
+	socket.on('right', function (move) {
+		angle += move;
+    if( angle > 180 ) angle = 180;
+    servo.to(angle);
+		console.log("Right");
+	});
+
+	// Trun left
+	socket.on('left', function (move) {
+		angle += move;
+    if( angle < 0 ) angle = 0;
+    servo.to(angle);
+		console.log("Left");
+	});
 });

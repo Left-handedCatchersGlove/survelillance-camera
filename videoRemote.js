@@ -33,7 +33,7 @@ $(function() {
       setInterval( function()
       {
         // 定期的に Canvas へ video タグの画像を書き出す
-        context.drawImage(video, 0, 0, 320, 240);
+        context.drawImage(video, 0, 0, 640, 480);
         // toDataURL で Base64 エンコードして文字列にする
         var data = canvas.toDataURL('image/jpeg', 0.5);
         // 文字列をサーバに WebSocket で送る
@@ -53,3 +53,17 @@ $(function() {
     if (typeof(data) === 'string') others.src = data;
   });
 });
+
+// Right button event
+function TrunRight(){
+  //alert("Right");
+  var move = 20;
+  socket.emit('right', move)
+}
+
+// Left button event
+function TrunLeft(){
+  //alert("Left");
+  var move = -20;
+  socket.emit('left', move)
+}

@@ -1,16 +1,24 @@
 <!DOCTYPE HTML>
 <html lang="ja">
   <head>
-    <title>Remote Test</title>
+    <title>Kzm Labo Video Cam</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script src="http://192.168.11.5:3000/socket.io/socket.io.js"></script>
+    <script src="http://192.168.0.21:3000/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="videoRemote.js"></script>
   </head>
 
-  <body>
-    <!-- 二つ画面があることになるので、みせかけの video タグ-->
-    <video  id="webcam-movie" width="0" height="0"></video>
-    <canvas id="webcam-image" width="320" height="240"></canvas>
-    <img    id="others-movie" width="320" height="240" />
+	<body bgcolor="#000000">
+		<center>
+			<!-- 二つ画面があることになるので、みせかけの video タグ-->
+			<video  id="webcam-movie" width="0" height="0"></video>
+    	<canvas id="webcam-image" width="640" height="480"></canvas>
+			<img    id="others-movie" width="640" height="480" />
+
+			<!-- Button event -->
+			<form name = "CameraTrun">
+				<input type="button" value="Right" onClick="TrunRight()">
+				<input type="button" value="Left"  onClick="TrunLeft()">
+			</form>
+		</center>
   </body>
 </html>
